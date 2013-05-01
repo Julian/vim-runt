@@ -1,4 +1,4 @@
-function! ToggleTestLock()
+function! <SID>ToggleTestLock()
     if !exists("s:test_lock_enabled")
         let s:test_lock_enabled = 0
         " Open a vertical split if only one window is open already
@@ -6,7 +6,7 @@ function! ToggleTestLock()
             exec "vsp " . FindTestFile(expand("%"))
             wincmd h
         endif
-        return ToggleTestLock()
+        return <SID>ToggleTestLock()
     else
         augroup test_lock
             au!
@@ -19,6 +19,7 @@ function! ToggleTestLock()
         augroup END
     endif
 endfun
+command! ToggleTestLock call <SID>ToggleTestLock()
 
 function! <SID>DoTestLock()
     if winnr() == winnr("$")
