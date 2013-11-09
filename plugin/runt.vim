@@ -47,6 +47,7 @@ endfunction
 function! FindTestFile(path)
     return a:path
 endfunction
+command! -nargs=? -complete=file FindTestFile echo FindTestFile(<f-args>)
 
 function! FindTestSuite(path)
     return a:path
