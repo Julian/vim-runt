@@ -1,4 +1,4 @@
-let b:test_runner = expand("$PYTHON_TEST_RUNNER")
+let b:test_runner = '/usr/bin/env ' . expand("$PYTHON_TEST_RUNNER")
 
 function! b:runt_is_test_file(path)
     " XXX: Make me search the path given as an argument, not the current buffer
@@ -22,6 +22,6 @@ function! b:runt_find_file(path)
 
 endfunction
 
-function! b:runt_find_suite(path)
-    return "tox -e py27"
+function! b:runt_file(path)
+    return b:test_runner . ' ' . a:path
 endfunction

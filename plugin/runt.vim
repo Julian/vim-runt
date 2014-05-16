@@ -58,7 +58,11 @@ function! runt#suite(path)
 endfunction
 
 function! runt#file(path)
-    echoerr 'Not yet implemented'
+    if exists('*b:runt_file')
+        return b:runt_file(runt#find_file(a:path))
+    else
+        echoerr 'Not yet implemented'
+    endif
 endfunction
 
 function! runt#class(path, cursor_pos)
