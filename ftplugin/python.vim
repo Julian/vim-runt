@@ -1,7 +1,7 @@
 let b:test_runner = expand("$PYTHON_TEST_RUNNER")
 
-function! FindTestFile(path)
-    let path = a:path
+function! b:runt_find_file()
+    let path = expand("%")
     if search("^class \\i*(.*TestCase.*)", "nw")
         return path
     endif
@@ -21,6 +21,6 @@ function! FindTestFile(path)
 
 endfunction
 
-function! RunTestSuite(path)
+function! b:runt_find_suite(path)
     return "tox -e py27"
 endfunction
