@@ -1,38 +1,38 @@
-function! runt#lock()
-    if !exists("s:test_lock_enabled")
-        let s:test_lock_enabled = 0
+function! runt#follow()
+    if !exists("s:test_follow_enabled")
+        let s:test_follow_enabled = 0
         " Open a vertical split if only one window is open already
         if winnr("$") == 1
             execute "vsplit " . runt#find_file(expand("%"))
             wincmd h
         endif
-        return runt#lock()
+        return runt#follow()
     else
-        augroup test_lock
+        augroup test_follow
             au!
-            if !s:test_lock_enabled
-                autocmd BufWinEnter * nested call s:do_lock()
-                let s:test_lock_enabled = 1
+            if !s:test_follow_enabled
+                autocmd BufWinEnter * nested call s:do_follow()
+                let s:test_follow_enabled = 1
             else
-                let s:test_lock_enabled = 0
+                let s:test_follow_enabled = 0
             endif
         augroup END
     endif
 endfun
-command! ToggleTestLock call runt#lock()
+command! ToggleTestFollow call runt#follow()
 
-function! s:do_lock()
+function! s:do_follow()
     if winnr() == winnr("$")
         return
     endif
 
     let path = expand("%")
 
-    call runt#lock()  " temporarily disable so we don't loop
+    call runt#follow()  " temporarily disable so we don't loop
     execute winnr("$") . "wincmd w"
     execute ":edit " . runt#find_file(expand("%"))
     wincmd p
-    call runt#lock()  " re-enable
+    call runt#follow()  " re-enable
 endfunction
 
 function! runt#is_test_file(path)
