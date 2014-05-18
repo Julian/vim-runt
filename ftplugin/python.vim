@@ -1,4 +1,6 @@
-let b:test_runner = '/usr/bin/env ' . expand("$PYTHON_TEST_RUNNER")
+if !exists('b:test_runner')
+    let b:test_runner = expand("$PYTHON_TEST_RUNNER")
+endif
 
 function! b:runt_is_test_file(path)
     " XXX: Make me search the path given as an argument, not the current buffer
