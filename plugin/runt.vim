@@ -59,7 +59,8 @@ endfunction
 
 function! runt#file(path)
     if exists('*b:runt_file')
-        return b:runt_file(runt#find_file(a:path))
+        let t:runt_last_command = b:runt_file(runt#find_file(a:path))
+        return t:runt_last_command
     else
         echoerr 'Not yet implemented'
     endif
