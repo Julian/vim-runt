@@ -13,6 +13,7 @@ function! b:runt_find_file(path)
 
     for test_file in [
     \   parent . "/tests/test_" . fnamemodify(path, ":t"),
+    \   parent . "/test/test_" . fnamemodify(path, ":t"),
     \   parent . "/tests.py"
     \   ]
         if filereadable(test_file)
