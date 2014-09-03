@@ -39,7 +39,7 @@ function! runt#is_test_file(path)
     if exists('*b:runt_is_test_file')
         return b:runt_is_test_file(a:path)
     else
-        echoerr 'Not yet implemented'
+        throw 'Not yet implemented'
     endif
 endfunction
 
@@ -49,12 +49,12 @@ function! runt#find_file(path)
     elseif exists('*b:runt_find_file')
         return b:runt_find_file(a:path)
     else
-        echoerr 'Not yet implemented'
+        throw 'Not yet implemented'
     endif
 endfunction
 
 function! runt#suite(path)
-    echoerr 'Not yet implemented'
+    throw 'Not yet implemented'
 endfunction
 
 function! runt#file(path)
@@ -62,14 +62,14 @@ function! runt#file(path)
         let t:runt_last_command = b:runt_file(runt#find_file(a:path))
         return t:runt_last_command
     else
-        echoerr 'Not yet implemented'
+        throw 'Not yet implemented'
     endif
 endfunction
 
 function! runt#class(path, cursor_pos)
-    echoerr 'Not yet implemented'
+    throw 'Not yet implemented'
 endfunction
 
 function! runt#method(path, cursor_pos)
-    echoerr 'Not yet implemented'
+    throw 'Not yet implemented'
 endfunction
