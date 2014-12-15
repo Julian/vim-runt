@@ -46,8 +46,13 @@ endfunction
 function! runt#find_test_file_for(path)
     if runt#is_test_file(a:path)
         return a:path
-    elseif exists('b:runt_find_file')
-        return call(b:runt_find_file, [a:path])
+    elseif exists('b:runt_find_test_file_for')
+        let test_file = call(b:runt_find_test_file_for, [a:path])
+        if !test_file
+            throw "Couldn't find a test file for '" . a:path . "'"
+        else
+            return test_file
+        endif
     else
         throw 'Not yet implemented'
     endif

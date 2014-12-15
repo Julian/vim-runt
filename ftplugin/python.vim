@@ -21,9 +21,6 @@ function! FindPythonTestFile(path)
             return test_file
         endif
     endfor
-
-    echoerr "Couldn't find a test file for '" . path . "'"
-
 endfunction
 let b:runt_find_test_file_for = 'FindPythonTestFile'
 
