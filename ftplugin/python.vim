@@ -25,7 +25,7 @@ function! FindPythonTestFile(path)
     echoerr "Couldn't find a test file for '" . path . "'"
 
 endfunction
-let b:runt_find_file = 'FindPythonTestFile'
+let b:runt_find_test_file_for = 'FindPythonTestFile'
 
 function! RunPythonTestFile(path)
     return b:test_runner . ' ' . a:path

@@ -3,7 +3,7 @@ function! runt#follow()
         let s:test_follow_enabled = 0
         " Open a vertical split if only one window is open already
         if winnr("$") == 1
-            execute "vsplit " . runt#find_file(expand("%"))
+            execute "vsplit " . runt#find_test_file_for(expand("%"))
             wincmd h
         endif
         return runt#follow()
@@ -30,7 +30,7 @@ function! s:do_follow()
 
     call runt#follow()  " temporarily disable so we don't loop
     execute winnr("$") . "wincmd w"
-    execute ":edit " . runt#find_file(expand("%"))
+    execute ":edit " . runt#find_test_file_for(expand("%"))
     wincmd p
     call runt#follow()  " re-enable
 endfunction
@@ -43,7 +43,7 @@ function! runt#is_test_file(path)
     endif
 endfunction
 
-function! runt#find_file(path)
+function! runt#find_test_file_for(path)
     if runt#is_test_file(a:path)
         return a:path
     elseif exists('b:runt_find_file')
@@ -59,7 +59,9 @@ endfunction
 
 function! runt#file(path)
     if exists('b:runt_file')
-        let t:runt_last_command = call(b:runt_file, [runt#find_file(a:path)])
+        let t:runt_last_command = call(
+            \ b:runt_file, [runt#find_test_file_for(a:path)],
+            \ )
         return t:runt_last_command
     else
         throw 'Not yet implemented'
