@@ -36,8 +36,8 @@ function! s:do_follow()
 endfunction
 
 function! runt#is_test_file(path)
-    if exists('*b:runt_is_test_file')
-        return b:runt_is_test_file(a:path)
+    if exists('b:runt_is_test_file')
+        return call(b:runt_is_test_file, [a:path])
     else
         throw 'Not yet implemented'
     endif
@@ -46,8 +46,8 @@ endfunction
 function! runt#find_file(path)
     if runt#is_test_file(a:path)
         return a:path
-    elseif exists('*b:runt_find_file')
-        return b:runt_find_file(a:path)
+    elseif exists('b:runt_find_file')
+        return call(b:runt_find_file, [a:path])
     else
         throw 'Not yet implemented'
     endif
@@ -58,8 +58,8 @@ function! runt#suite(path)
 endfunction
 
 function! runt#file(path)
-    if exists('*b:runt_file')
-        let t:runt_last_command = b:runt_file(runt#find_file(a:path))
+    if exists('b:runt_file')
+        let t:runt_last_command = call(b:runt_file, [runt#find_file(a:path)])
         return t:runt_last_command
     else
         throw 'Not yet implemented'
