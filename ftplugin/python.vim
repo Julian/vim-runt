@@ -15,7 +15,7 @@ function! FindPythonTestFile(path)
     for test_file in [
     \   parent . "/tests/test_" . fnamemodify(path, ":t"),
     \   parent . "/test/test_" . fnamemodify(path, ":t"),
-    \   parent . "/tests.py"
+    \   parent . "/tests.py",
     \   ]
         if filereadable(test_file)
             return test_file
