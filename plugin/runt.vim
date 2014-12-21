@@ -36,47 +36,45 @@ function! s:do_follow()
 endfunction
 
 function! runt#is_test_file(path)
-    if exists('b:runt_is_test_file')
-        return call(b:runt_is_test_file, [a:path])
-    else
-        throw 'Not yet implemented'
-    endif
+    return call(get(b:, 'runt_is_test_file', 'RuntNotImplemented'), [a:path])
 endfunction
 
 function! runt#find_test_file_for(path)
     if runt#is_test_file(a:path)
         return a:path
-    elseif exists('b:runt_find_test_file_for')
-        let test_file = call(b:runt_find_test_file_for, [a:path])
-        if !test_file
-            throw "Couldn't find a test file for '" . a:path . "'"
-        else
-            return test_file
-        endif
+    endif
+
+    let test_file = call(
+        \ get(b:, 'runt_find_test_file_for', 'RuntNotImplemented'),
+        \ [a:path],
+        \ )
+    if type(test_file) != type('')
+        throw "Couldn't find a test file for '" . a:path . "'"
     else
-        throw 'Not yet implemented'
+        return test_file
     endif
 endfunction
 
 function! runt#suite(path)
-    throw 'Not yet implemented'
+    RuntNotImplemented()
 endfunction
 
 function! runt#file(path)
-    if exists('b:runt_file')
-        let t:runt_last_command = call(
-            \ b:runt_file, [runt#find_test_file_for(a:path)],
-            \ )
-        return t:runt_last_command
-    else
-        throw 'Not yet implemented'
-    endif
+    let t:runt_last_command = call(
+        \ get(b:, 'runt_file', 'RuntNotImplemented'),
+        \ [runt#find_test_file_for(a:path)],
+        \ )
+    return t:runt_last_command
 endfunction
 
 function! runt#class(path, cursor_pos)
-    throw 'Not yet implemented'
+    RuntNotImplemented()
 endfunction
 
 function! runt#method(path, cursor_pos)
+    RuntNotImplemented()
+endfunction
+
+function! RuntNotImplemented(...)
     throw 'Not yet implemented'
 endfunction
