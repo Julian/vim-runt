@@ -9,12 +9,12 @@ endfunction
 let b:runt_is_test_file = 'IsPythonTestFile'
 
 function! FindPythonTestFile(path)
-    let path = a:path
-    let parent = fnamemodify(path, ":h")
+    let canonicalized = substitute(fnamemodify(a:path, ':t'), '^_*', '', '')
+    let parent = fnamemodify(a:path, ":h")
 
     for test_file in [
-    \   parent . "/tests/test_" . fnamemodify(path, ":t"),
-    \   parent . "/test/test_" . fnamemodify(path, ":t"),
+    \   parent . "/tests/test_" . canonicalized,
+    \   parent . "/test/test_" . canonicalized,
     \   parent . "/tests.py",
     \   ]
         if filereadable(test_file)
