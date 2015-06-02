@@ -12,11 +12,17 @@ function! FindPythonTestFile(path)
     let canonicalized = substitute(fnamemodify(a:path, ':t'), '^_*', '', '')
     let parent = fnamemodify(a:path, ":h")
 
-    for test_file in [
-    \   parent . "/tests/test_" . canonicalized,
-    \   parent . "/test/test_" . canonicalized,
-    \   parent . "/tests.py",
+    let possible_locations = [
+    \   parent . '/tests/test_' . canonicalized,
+    \   parent . '/test/test_' . canonicalized,
+    \   parent . '/tests.py',
     \   ]
+
+    if parent =~ '\<tests\?\>'
+        call add(possible_locations, parent . '/test_' . canonicalized)
+    endif
+
+    for test_file in possible_locations
         if filereadable(test_file)
             return test_file
         endif
